@@ -1,0 +1,113 @@
+/*
+ * This file is intended to be used as starter for kotlinJs 'React purpose' builds
+ *
+ * It should contain all the necessary dependencies (kotlin standard, base react integration and javascript) to start
+ * tweaking react based project
+ */
+
+buildscript {
+    ext.kotlinVersion = "1.2.31"
+    ext.kotlinFrontendPluginVersion = "0.0.29"
+    ext.kotlinCoroutineVersion = "0.22.1"
+    ext.kotlinxHtmlVersion = "latest-1.2.40-dev-769-337"
+    ext.wrapperReactVersion="16.2.0-pre.19-kotlin-1.2.20"
+    ext.wrapperExtensionsVersion = "1.0.1-pre.11-kotlin-1.2.21"
+
+    repositories {
+        /*
+         * Repository for kotlin-frontend-plugin
+         */
+        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:$kotlinFrontendPluginVersion"
+    }
+}
+
+apply plugin: "org.jetbrains.kotlin.frontend"
+apply plugin: "kotlin2js"        // Kotlin 2 JS compiler plugin
+apply plugin: "kotlin-dce-js"    // Kotlin dead code elimination plugin to strip off final (Kotlin) bundle
+
+group = "local.playground"
+version = "0.0.1-SNAPSHOT"
+
+repositories {
+    /*
+     * Repository for kotlin-wrappers (react, react-dom, react-router, redux)
+     */
+    maven { url = "http://dl.bintray.com/kotlin/kotlin-js-wrappers/" }
+    /*
+     * kotlinx-html-js repository (0.6.9)
+     */
+    maven { url = "http://dl.bintray.com/kotlin/kotlinx.html/" }
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$kotlinCoroutineVersion"
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion"
+
+    compile "org.jetbrains:kotlin-extensions:$wrapperExtensionsVersion"
+    compile "org.jetbrains:kotlin-react:$wrapperReactVersion"
+    compile "org.jetbrains:kotlin-react-dom:$wrapperReactVersion"
+
+}
+
+compileKotlin2Js {
+    kotlinOptions {
+        outputFile = "${buildDir}/kotlin2js/bundle.js"
+        sourceMap = true
+        moduleKind = "umd"
+    }
+}
+
+runDceKotlinJs {
+    dceOptions {
+//        devMode = false      // Boolean
+//        outputDirectory = "" //String?
+    }
+}
+
+kotlinFrontend {
+
+    downloadNodeJsVersion = "8.10.0"
+//    nodeJsMirror
+
+    sourceMaps = true
+
+    npm {
+        dependency("react", "16.2.0")
+        dependency("react-dom", "16.2.0")
+
+        devDependency("css-loader")
+        devDependency("style-loader")
+        devDependency("sass-loader")
+        devDependency("node-sass")
+        devDependency("babel-loader")
+        devDependency("babel-core")
+        devDependency("karma")
+        devDependency("html-webpack-plugin")
+    }
+
+    webpackBundle {
+        port = 8080
+    }
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
+task copyWeb(type: Copy) {
+    from "${sourceSets.main.output.resourcesDir}/web"
+    into "${buildDir}/kotlin-js-min/main/web"
+}
+
+copyWeb.dependsOn(processResources)
+runDceKotlinJs.dependsOn(copyWeb)
