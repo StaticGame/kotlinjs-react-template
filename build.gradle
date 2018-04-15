@@ -7,17 +7,17 @@
 
 buildscript {
     ext.kotlinVersion = "1.2.31"
-    ext.kotlinFrontendPluginVersion = "0.0.29"
+    ext.kotlinFrontendPluginVersion = "0.0.30"
     ext.kotlinCoroutineVersion = "0.22.1"
     ext.kotlinxHtmlVersion = "latest-1.2.40-dev-769-337"
-    ext.wrapperReactVersion="16.2.0-pre.19-kotlin-1.2.20"
-    ext.wrapperExtensionsVersion = "1.0.1-pre.11-kotlin-1.2.21"
+    ext.wrapperReactVersion="16.3.1-pre.27-kotlin-1.2.30"
+    ext.wrapperExtensionsVersion = "1.0.1-pre.27-kotlin-1.2.30"
 
     repositories {
         /*
          * Repository for kotlin-frontend-plugin
          */
-        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap/" }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-eap/" }
         mavenCentral()
     }
     dependencies {
@@ -61,7 +61,7 @@ compileKotlin2Js {
     kotlinOptions {
         outputFile = "${buildDir}/kotlin2js/bundle.js"
         sourceMap = true
-        moduleKind = "umd"
+        moduleKind = "commonjs"
     }
 }
 
@@ -80,12 +80,14 @@ kotlinFrontend {
     sourceMaps = true
 
     npm {
-        dependency("react", "16.2.0")
-        dependency("react-dom", "16.2.0")
+        dependency("react", "16.3.1")
+        dependency("react-dom", "16.3.1")
+        dependency("react-transition-group", "2.3.1")
 
         devDependency("css-loader")
         devDependency("style-loader")
         devDependency("sass-loader")
+        devDependency("file-loader")
         devDependency("node-sass")
         devDependency("babel-loader")
         devDependency("babel-core")
