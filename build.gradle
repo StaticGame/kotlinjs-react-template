@@ -4,31 +4,18 @@
  * It should contain all the necessary dependencies (kotlin standard, base react integration and javascript) to start
  * tweaking react based project
  */
-
-buildscript {
-    ext.kotlinVersion = "1.2.31"
-    ext.kotlinFrontendPluginVersion = "0.0.30"
-    ext.kotlinCoroutineVersion = "0.22.1"
-    ext.kotlinxHtmlVersion = "latest-1.2.40-dev-769-337"
-    ext.wrapperReactVersion="16.3.1-pre.27-kotlin-1.2.30"
-    ext.wrapperExtensionsVersion = "1.0.1-pre.27-kotlin-1.2.30"
-
-    repositories {
-        /*
-         * Repository for kotlin-frontend-plugin
-         */
-        maven { url "https://dl.bintray.com/kotlin/kotlin-eap/" }
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "org.jetbrains.kotlin:kotlin-frontend-plugin:$kotlinFrontendPluginVersion"
-    }
+plugins {
+    id "org.jetbrains.kotlin.frontend" version "0.0.30"
+    id "kotlin2js" version "1.2.31"
+    id "kotlin-dce-js" version "1.2.31"
 }
 
-apply plugin: "org.jetbrains.kotlin.frontend"
-apply plugin: "kotlin2js"        // Kotlin 2 JS compiler plugin
-apply plugin: "kotlin-dce-js"    // Kotlin dead code elimination plugin to strip off final (Kotlin) bundle
+ext.kotlinVersion = "1.2.31"
+ext.kotlinCoroutineVersion = "0.22.1"
+ext.kotlinxHtmlVersion = "latest-1.2.40-dev-769-337"
+ext.wrapperReactVersion="16.3.1-pre.27-kotlin-1.2.30"
+ext.wrapperExtensionsVersion = "1.0.1-pre.27-kotlin-1.2.30"
+
 
 group = "local.playground"
 version = "0.0.1-SNAPSHOT"
