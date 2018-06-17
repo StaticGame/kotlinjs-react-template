@@ -5,16 +5,16 @@
  * tweaking react based project
  */
 plugins {
-    id "org.jetbrains.kotlin.frontend" version "0.0.30"
-    id "kotlin2js" version "1.2.31"
-    id "kotlin-dce-js" version "1.2.31"
+    id "org.jetbrains.kotlin.frontend" version "0.0.31"
+    id "kotlin2js" version "1.2.41"
+    id "kotlin-dce-js" version "1.2.41"
 }
 
-ext.kotlinVersion = "1.2.31"
-ext.kotlinCoroutineVersion = "0.22.1"
-ext.kotlinxHtmlVersion = "latest-1.2.40-dev-769-337"
-ext.wrapperReactVersion="16.3.1-pre.27-kotlin-1.2.30"
-ext.wrapperExtensionsVersion = "1.0.1-pre.27-kotlin-1.2.30"
+ext.kotlinVersion = "1.2.41"
+ext.kotlinCoroutineVersion = "0.23.3"
+ext.kotlinxHtmlVersion = "latest-1.2.60-dev-773-649"
+ext.wrapperReactVersion="16.4.0-pre.32-kotlin-1.2.41"
+ext.wrapperExtensionsVersion = "1.0.1-pre.32-kotlin-1.2.30"
 
 
 group = "local.playground"
@@ -67,8 +67,8 @@ kotlinFrontend {
     sourceMaps = true
 
     npm {
-        dependency("react", "16.3.1")
-        dependency("react-dom", "16.3.1")
+        dependency("react", "16.4.1")
+        dependency("react-dom", "16.4.1")
         dependency("react-transition-group", "2.3.1")
 
         devDependency("css-loader")
