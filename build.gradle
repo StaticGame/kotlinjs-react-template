@@ -5,17 +5,17 @@
  * tweaking react based project
  */
 plugins {
-    id "org.jetbrains.kotlin.frontend" version "0.0.31"
-    id "kotlin2js" version "1.2.41"
-    id "kotlin-dce-js" version "1.2.41"
+    id "org.jetbrains.kotlin.frontend" version "0.0.37"
+    id "kotlin2js" version "1.2.60"
+    id "kotlin-dce-js" version "1.2.60"
 }
 
-ext.kotlinVersion = "1.2.41"
-ext.kotlinCoroutineVersion = "0.23.3"
-ext.kotlinxHtmlVersion = "latest-1.2.60-dev-773-649"
-ext.wrapperReactVersion="16.4.0-pre.32-kotlin-1.2.41"
-ext.wrapperExtensionsVersion = "1.0.1-pre.32-kotlin-1.2.30"
-
+ext.kotlinVersion = "1.2.60"
+ext.kotlinCoroutineVersion = "0.24.0"
+ext.wrapperReactVersion = "16.4.2-pre.46-kotlin-1.2.41"
+ext.wrapperExtensionsVersion = "1.0.1-pre.46-kotlin-1.2.60"
+ext.wrapperReactRouterVersion = "4.3.1-pre.46-kotlin-1.2.60"
+ext.wrapperCssVersion = "1.0.0-pre.46-kotlin-1.2.60"
 
 group = "local.playground"
 version = "0.0.1-SNAPSHOT"
@@ -41,6 +41,10 @@ dependencies {
     compile "org.jetbrains:kotlin-extensions:$wrapperExtensionsVersion"
     compile "org.jetbrains:kotlin-react:$wrapperReactVersion"
     compile "org.jetbrains:kotlin-react-dom:$wrapperReactVersion"
+    compile "org.jetbrains:kotlin-react-router-dom:$wrapperReactRouterVersion"
+    compile "org.jetbrains:kotlin-css:$wrapperCssVersion"
+    compile "org.jetbrains:kotlin-css-js:$wrapperCssVersion"
+    compile "org.jetbrains:kotlin-styled:$wrapperCssVersion"
 
 }
 
@@ -67,9 +71,12 @@ kotlinFrontend {
     sourceMaps = true
 
     npm {
-        dependency("react", "16.4.1")
-        dependency("react-dom", "16.4.1")
-        dependency("react-transition-group", "2.3.1")
+        dependency("react", "16.4.2")
+        dependency("react-dom", "16.4.2")
+        dependency("react-router-dom", "4.3.1")
+        dependency("react-transition-group", "2.4.0")
+        dependency("styled-components")
+        dependency("inline-style-prefixer")
 
         devDependency("css-loader")
         devDependency("style-loader")
